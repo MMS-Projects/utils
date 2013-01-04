@@ -1,43 +1,20 @@
 package net.mms_projects.utils;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 
-public class Manager<T> {
-
-	protected LinkedHashMap<String, T> items = new LinkedHashMap<String, T>();
-
-	private String currentItem;
+public class Manager<T> extends HashMap<String, T> {
 
 	public void addItem(String name, T item) {
-		items.put(name, item);
-		if (items.size() == 1) {
-			try {
-				setCurrentItem(name);
-			} catch (Exception e) {
-			}
-		}
+		this.put(name, item);
 	}
 
-	public T getCurrentItem() {
-		return items.get(currentItem);
+	public T get(int index) {
+		return get(getKey(index));
 	}
 
-	public T getItem() {
-		return getCurrentItem();
-	}
-
-	public T getItem(int index) {
-		return getItem(getItemName(index));
-	}
-
-	public T getItem(String itemName) {
-		return items.get(itemName);
-	}
-
-	public int getItemIndex(String itemName) {
+	public int getIndex(String itemName) {
 		int index = 0;
-		for (String key : items.keySet()) {
+		for (String key : this.keySet()) {
 			if (key.equalsIgnoreCase(itemName)) {
 				return index;
 			}
@@ -46,9 +23,9 @@ public class Manager<T> {
 		return -1;
 	}
 
-	public String getItemName(int index) {
+	public String getKey(int index) {
 		int searchIndex = 0;
-		for (String key : items.keySet()) {
+		for (String key : this.keySet()) {
 			if (searchIndex == index) {
 				return key;
 			}
@@ -57,26 +34,14 @@ public class Manager<T> {
 		return null;
 	}
 
-	public String[] getItemNames() {
-		String[] itemNames = new String[items.size()];
+	public String[] getKeys() {
+		String[] keys = new String[this.size()];
 		int i = 0;
-		for (String key : items.keySet()) {
-			itemNames[i] = key;
+		for (String key : this.keySet()) {
+			keys[i] = key;
 			i++;
 		}
-		return itemNames;
-	}
-
-	public Collection<T> getItems() {
-		return items.values();
-	}
-
-	public void setCurrentItem(String currentItem) throws Exception {
-		if (items.containsKey(currentItem)) {
-			this.currentItem = currentItem;
-		} else {
-			throw new Exception("Unknown item " + currentItem + ".");
-		}
+		return keys;
 	}
 
 }

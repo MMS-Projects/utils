@@ -1,8 +1,9 @@
 package net.mms_projects.utils;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
-public class Manager<T> extends HashMap<String, T> {
+public class Manager<T> extends HashMap<String, T> implements Iterable<T> {
 
 	public void addItem(String name, T item) {
 		this.put(name, item);
@@ -42,6 +43,11 @@ public class Manager<T> extends HashMap<String, T> {
 			i++;
 		}
 		return keys;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return this.values().iterator();
 	}
 
 }
